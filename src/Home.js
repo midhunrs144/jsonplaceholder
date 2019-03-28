@@ -11,7 +11,8 @@ class Home extends Component {
         this.state = {
             posts: [],
             isToggleOn: "My Post",
-            postid: ""
+            postid: "",
+            deleteid: ""
         };
     }
 
@@ -58,20 +59,46 @@ class Home extends Component {
         
     }
 
+    delete=(id)=>{
+       {/*} this.setState({deleteid: id}) */}
+        {/*this.setState(prevState => ({ deleteid: [...prevState.deleteid, id] }))*/}
+
+        if (id<=21 ||id>=30) {
+            this.setState({posts: this.state.posts.splice(id,9)});
+        }
+         else {
+            this.setState({posts: this.state.posts.splice(id,99)});
+        }
+        
+
+       
+                 
+            
+        
+    }
+
     render() {
+
     	
         return (
             <div>
 				<div className="topnav">				 
   					<Toggle toggle={this.toggle}/>
-  				</div>
+                    <button>create post</button>
+  				</div>  
   				<div>
   				{this.state.posts.map(post=>
-                    <Link to={'/Comment/'+post.id}>
-  					<div key={post.id} onClick={()=>this.comment(post.id)}>
-                	<Jobcard title={post.title} body={post.body}/>
-                	</div>
-                	</Link>
+                   <div>
+                        <Link to={'/Comment/'+post.id}>
+                        <div key={post.id}>
+                           <Jobcard title={post.title} body={post.body}/>
+                        </div>
+                        </Link>
+                        <div className="btn">
+                        <button onClick={()=>this.delete(post.id)}>delete</button>
+                        <button>update</button>
+                        </div>
+                    </div>
                 	)		
 				}
 				</div>
@@ -90,8 +117,10 @@ class Jobcard extends Component {
 
         return (
             <div>
+                
 				<div className="content">
   					<div className="jobcard">
+
   					<h1>{this.props.title}</h1>
   					<article>{this.props.body}</article>
   					</div>	
