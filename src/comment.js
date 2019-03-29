@@ -14,6 +14,7 @@ class Comment extends Component {
         };
     }
 
+    // performs api call and fetches comments of the click post
     componentDidMount() {
         
             console.log(this.props.match.params.id);
@@ -37,7 +38,9 @@ class Comment extends Component {
     	
         return (
             <div>
+                {/* comments page */}
                 <h1>Comments</h1>
+                {/* to loop the comments*/}
                 {this.state.comments.map(comments=>
                     <div>
                     <div className="comment"> 

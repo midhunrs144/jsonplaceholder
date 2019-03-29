@@ -16,6 +16,8 @@ class Home extends Component {
         };
     }
 
+        //to perform api call for fetching all posts and stores in state.
+
     componentDidMount() {
         
 
@@ -30,6 +32,9 @@ class Home extends Component {
             
             
     }
+    
+    // to toggle between myposts and all posts
+
     toggle=()=>{
     	this.state.isToggleOn=="My Post"? this.setState({isToggleOn:"All Post"}) : this.setState({isToggleOn:"My Post"});
    
@@ -54,27 +59,26 @@ class Home extends Component {
 
     }
 
-    comment=(id)=>{
-        this.setState({postid: id });
-        
-    }
+    // to delete a post
 
-    delete=(id)=>{
-       {/*} this.setState({deleteid: id}) */}
-        {/*this.setState(prevState => ({ deleteid: [...prevState.deleteid, id] }))*/}
-
-        if (id<=21 ||id>=30) {
-            this.setState({posts: this.state.posts.splice(id,9)});
-        }
-         else {
-            this.setState({posts: this.state.posts.splice(id,99)});
-        }
-        
-
-       
-                 
+    delete=(index)=>{
             
+         let del = this.state.posts;
+         console.log("hhh"+del);
+         del.splice(index,1);
+         console.log("hfg"+del);
+          this.setState({posts: del})
+
+           {/*} id= id-1;
+    let array = (post,id) => {
+            return post != id;
+                }
+    let myFunction = () => {
+     this.setState({posts: this.state.posts.filter(array)});
+            }  */}
+         
         
+   
     }
 
     render() {
@@ -82,21 +86,26 @@ class Home extends Component {
     	
         return (
             <div>
+                {/* home page */}
 				<div className="topnav">				 
   					<Toggle toggle={this.toggle}/>
-                    <button>create post</button>
+                    <Link to ="/Create" ><button>create post</button></Link>
   				</div>  
-  				<div>
+  				<div> 
+                {/* for looping the posts */}
   				{this.state.posts.map(post=>
                    <div>
+                        {/* link to view comments */}
                         <Link to={'/Comment/'+post.id}>
                         <div key={post.id}>
                            <Jobcard title={post.title} body={post.body}/>
                         </div>
                         </Link>
                         <div className="btn">
-                        <button onClick={()=>this.delete(post.id)}>delete</button>
-                        <button>update</button>
+                    {/* conditional rendering-- shows delete button only for my posts */}
+                       {post.userId==3?  
+                        <button onClick={()=>this.delete(post.id-1)}>delete</button>:null}
+                         <Link to={'/Update/'+post.id}><button>update</button></Link>
                         </div>
                     </div>
                 	)		
@@ -117,7 +126,7 @@ class Jobcard extends Component {
 
         return (
             <div>
-                
+                {/* jobcard */}
 				<div className="content">
   					<div className="jobcard">
 

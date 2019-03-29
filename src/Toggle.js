@@ -11,6 +11,8 @@ class Toggle extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+
+	//toggles the state in response with toggle button
 	handleClick() {
 		
 		this.state.buttonName=="My Post"? this.setState({buttonName:"All Post"}) : this.setState({buttonName:"My Post"});
@@ -27,6 +29,7 @@ class Toggle extends React.Component {
 
   render() {
     return (
+		//toggles the button name fetched from state 
       <button ref="button" onClick={this.handleClick}>
        {this.state.buttonName}
 
